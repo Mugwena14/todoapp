@@ -5,6 +5,13 @@ import errorHandler from './middlewares/error.js';
 import logger from './middlewares/logger.js';
 import notFound from './middlewares/notFound.js';
 import tasks from './routes/tasks.js';
+import cors from 'cors';
+
+cors.use(cors({
+    origin: 'http://localhost:3000',
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+}));
 
 // Parsers
 app.use(express.json());
