@@ -1,4 +1,13 @@
 
+let tasks = [
+    {id: 1, task: 'Task One'},
+    {id: 2, task: 'Task Two'},
+    {id: 3, task: 'Task Three'},
+    {id: 4, task: 'Task Four'},
+    {id: 5, task: 'Task Five'},
+];
+
+
 // desc Get all tasks and by limits
 // route GET /api/tasks || ?limit=number
 export const getTasks = (req, res, next) => {

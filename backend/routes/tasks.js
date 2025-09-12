@@ -1,28 +1,27 @@
 import express from 'express';
 const router = express.Router();
+import { 
+    getTaskById,
+    getTasks,
+    createTask,
+    updateTask,
+    deleteTask
+} from '../controllers/tasksController.js';
 
-
-let tasks = [
-    {id: 1, task: 'Task One'},
-    {id: 2, task: 'Task Two'},
-    {id: 3, task: 'Task Three'},
-    {id: 4, task: 'Task Four'},
-    {id: 5, task: 'Task Five'},
-];
 
 // Getting tasks and with their limits
-router.get('/', );
+router.get('/', getTasks);
 
 // Getting tasks by their id
-router.get('/:id', );
+router.get('/:id', getTaskById);
 
 // Creating task
-router.post('/', );
+router.post('/', createTask);
 
 // Updating tasks
-router.put('/:id', );
+router.put('/:id', updateTask);
 
 // Deleting user
-router.delete('/:id', );
+router.delete('/:id', deleteTask);
 
 export default router;
