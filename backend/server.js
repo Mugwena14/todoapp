@@ -7,8 +7,8 @@ import notFound from './middlewares/notFound.js';
 import tasks from './routes/tasks.js';
 import cors from 'cors';
 
-cors.use(cors({
-    origin: 'http://localhost:3000',
+app.use(cors({
+    origin: 'http://localhost:5173',
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
