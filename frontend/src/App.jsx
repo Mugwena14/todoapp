@@ -29,7 +29,7 @@ const App = () => {
 
   async function deleteTask(id) {
   try {
-    const res = await fetch(``, {
+    const res = await fetch(`http://localhost:8000/api/tasks/${id}`, {
       method: 'DELETE',
     });
 
