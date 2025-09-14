@@ -18,7 +18,10 @@ const App = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      ),
+      body: JSON.stringify({
+        id: todos.length + 1,
+        task: newTask,
+      }),
     });
     setNewTask('');
     fetchTasks();
