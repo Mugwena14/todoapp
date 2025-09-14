@@ -11,21 +11,7 @@ const App = () => {
     setTodos(data);
   }
 
-  async function addTask(e) {
-    e.preventDefault();
-    await fetch('http://localhost:8000/api/tasks', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        id: todos.length + 1,
-        task: newTask,
-      }),
-    });
-    setNewTask('');
-    fetchTasks();
-  }
+  
 
   async function deleteTask(id) {
   try {
