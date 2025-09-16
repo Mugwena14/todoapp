@@ -1,6 +1,6 @@
 import express from 'express';
 const app = express();
-const PORT = 8000;
+const PORT = process.env.PORT || 8000;
 import errorHandler from './middlewares/error.js';
 import logger from './middlewares/logger.js';
 import notFound from './middlewares/notFound.js';
