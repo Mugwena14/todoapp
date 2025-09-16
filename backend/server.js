@@ -6,6 +6,10 @@ import logger from './middlewares/logger.js';
 import notFound from './middlewares/notFound.js';
 import tasks from './routes/tasks.js';
 import cors from 'cors';
+import connectingDB from './config/db.js';
+
+
+connectingDB();
 
 app.use(cors({
     origin: 'http://localhost:5173',
