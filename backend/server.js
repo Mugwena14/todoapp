@@ -7,6 +7,8 @@ import notFound from './middlewares/notFound.js';
 import tasks from './routes/tasks.js';
 import cors from 'cors';
 import connectingDB from './config/db.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 
 connectingDB();
