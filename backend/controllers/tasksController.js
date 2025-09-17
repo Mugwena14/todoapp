@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler';
+import Task from '../models/tasksModel.js';
 
 
 let tasks = [
@@ -13,6 +14,8 @@ let tasks = [
 // desc Get all tasks and by limits
 // route GET /api/tasks || ?limit=number
 export const getTasks = asyncHandler( async (req, res, next) => {
+    const tasks = await Task.find();
+
     const lim = parseInt(req.query.limit);
     const newTasks = tasks.slice(0, lim);
     if(lim > 0){
