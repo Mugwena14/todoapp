@@ -12,7 +12,7 @@ import Task from '../models/tasksModel.js';
 
 // desc Get all tasks and by limits
 // route GET /api/tasks || ?limit=number
-export const getTasks = asyncHandler( async (req, res, next) => {
+export const getTasks = asyncHandler( async (req, res) => {
     const tasks = await Task.find();
 
     const lim = parseInt(req.query.limit);
@@ -24,7 +24,7 @@ export const getTasks = asyncHandler( async (req, res, next) => {
 
 // desc Get task by id
 // route GET /api/tasks/:id
-export const getTaskById = asyncHandler( async (req, res, next) => {
+export const getTaskById = asyncHandler( async (req, res) => {
     const id = req.params.id;
     
     const task = await Task.findById(id);
@@ -37,7 +37,7 @@ export const getTaskById = asyncHandler( async (req, res, next) => {
 
 // desc Create a task
 // route POST /api/tasks
-export const createTask = asyncHandler( async (req, res, next) => {
+export const createTask = asyncHandler( async (req, res) => {
     const createdTask = await Task.create(req.body);
     
     if(!req.body.task){
@@ -50,7 +50,9 @@ export const createTask = asyncHandler( async (req, res, next) => {
 // route PUT /api/tasks/:id
 export const updateTask = asyncHandler( async (req, res) => {
     const id = req.params.id;
-    const newTask = Task.findByIdAndUpdate(id, req.body)
+    const newTask = Task.findByIdAndUpdate(id, req.body, {
+        new: true,
+    })
 
     if(!newTask){
         res.status(404);
@@ -65,14 +67,13 @@ export const updateTask = asyncHandler( async (req, res) => {
 
 // desc Delete a task
 // route DELETE /api/tasks/:id
-export const deleteTask = asyncHandler( async (req, res, next) => {
-    const id = parseInt(req.params.id);
-    const deletedTask = tasks.find((task) => task.id === id);
-    const newUsers = tasks.filter((task) => task.id !== id)
+export const deleteTask = asyncHandler( async (req, res) => {
+    const id = req.params.id;
+
+    const deletedTask = await Task.findByIdAndDelete(id);
 
     if(!deletedTask){
-        const error = new Error(`Task of id: ${id} not found.`);
-        error.status = 404;
-        return next(error);
-    } res.status(200).json(newUsers);
+        res.status(404);
+        throw new Error(`Task of id: ${id} not found.`)
+    }
 })
