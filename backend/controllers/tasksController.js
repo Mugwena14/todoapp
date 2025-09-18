@@ -42,14 +42,14 @@ export const createTask = asyncHandler( async (req, res, next) => {
     
     if(!req.body.task){
         res.status(400);
-        throw new Error(err);
+        throw new Error(`Please enter task`);
     } res.status(201).json(createdTask);
 })
 
 // desc Update a task
 // route PUT /api/tasks/:id
 export const updateTask = asyncHandler( async (req, res, next) => {
-    const id = parseInt(req.params.id);
+    const id = req.params.id;
     const taskId = tasks.find((task) => task.id === id);
 
     if(!taskId){
