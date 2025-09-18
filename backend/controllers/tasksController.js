@@ -38,31 +38,28 @@ export const getTaskById = asyncHandler( async (req, res) => {
 // desc Create a task
 // route POST /api/tasks
 export const createTask = asyncHandler( async (req, res) => {
-    const createdTask = await Task.create(req.body);
-    
     if(!req.body.task){
         res.status(400);
         throw new Error(`Please enter task`);
-    } res.status(201).json(createdTask);
+    } 
+
+    const createdTask = await Task.create(req.body);
+    
+    res.status(201).json(createdTask);
 })
 
 // desc Update a task
 // route PUT /api/tasks/:id
 export const updateTask = asyncHandler( async (req, res) => {
-    const id = req.params.id;
-    const newTask = Task.findByIdAndUpdate(id, req.body, {
-        new: true,
-    })
+    const task = await Task.findById(req.params.id);
 
-    if(!newTask){
+    if(!task){
         res.status(404);
-        throw new Error(`Task of id: ${id} not found.`);
+        throw new Error(`Task of id: ${req.params.id} not found.`);
     }
+    const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {new: true,});
 
-    if(!req.body.task){
-        res.status(400);
-        throw new Error(`Please enter task`);
-    } res.status(200).json(newTask);
+    res.status(200).json(updatedTask);
 })
 
 // desc Delete a task
@@ -70,10 +67,12 @@ export const updateTask = asyncHandler( async (req, res) => {
 export const deleteTask = asyncHandler( async (req, res) => {
     const id = req.params.id;
 
-    const deletedTask = await Task.findByIdAndDelete(id);
+    const task = await Task.findById(id);
 
-    if(!deletedTask){
+    const deleteTask = await Task.findByIdAndDelete(id);
+
+    if(!task){
         res.status(404);
         throw new Error(`Task of id: ${id} not found.`)
-    }
+    } res.json({message: `id: ${id}`})
 })

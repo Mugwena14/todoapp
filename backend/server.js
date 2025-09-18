@@ -30,8 +30,8 @@ app.use(logger)
 app.use('/api/tasks', tasks);
 
 // Errors
-app.use(errorHandler);
 app.use(notFound);
+app.use(errorHandler);
 
 // Running server
 app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
