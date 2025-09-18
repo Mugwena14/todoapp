@@ -1,14 +1,13 @@
 import asyncHandler from 'express-async-handler';
 import Task from '../models/tasksModel.js';
 
-
-let tasks = [
-    {id: 1, task: 'Task One'},
-    {id: 2, task: 'Task Two'},
-    {id: 3, task: 'Task Three'},
-    {id: 4, task: 'Task Four'},
-    {id: 5, task: 'Task Five'},
-];
+// let tasks = [
+    // {id: 1, task: 'Task One'},
+    // {id: 2, task: 'Task Two'},
+    // {id: 3, task: 'Task Three'},
+    // {id: 4, task: 'Task Four'},
+    // {id: 5, task: 'Task Five'},
+// ];
 
 
 // desc Get all tasks and by limits
@@ -26,30 +25,25 @@ export const getTasks = asyncHandler( async (req, res, next) => {
 // desc Get task by id
 // route GET /api/tasks/:id
 export const getTaskById = asyncHandler( async (req, res, next) => {
-    const id = parseInt(req.params.id);
-    const taskId = tasks.find((task) => task.id === id);
+    const id = req.params.id;
+    
+    const task = await Task.findById(id);
 
-    if(!taskId){
-        const error = new Error(`Task of id: ${id} not found.`);
-        error.status = 404;
-        return next(error);
-    } res.status(200).json(taskId);
+    if(!task){
+        res.status(404);
+        throw new Error(`Task of id: ${id} not found.`);
+    } res.status(200).json(task);
 })
 
 // desc Create a task
 // route POST /api/tasks
 export const createTask = asyncHandler( async (req, res, next) => {
-    const addedTask = {
-        id: tasks.length + 1,
-        task: req.body.task
-    }
-
-    if(!addedTask.task){
-        const error = new Error(`Please enter task`);
-        error.status = 400;
-        return next(error);
-    } tasks.push(addedTask);
-    res.status(201).json(tasks);
+    const createdTask = await Task.create(req.body);
+    
+    if(!req.body.task){
+        res.status(400);
+        throw new Error(err);
+    } res.status(201).json(createdTask);
 })
 
 // desc Update a task
