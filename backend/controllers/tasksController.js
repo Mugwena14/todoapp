@@ -48,23 +48,19 @@ export const createTask = asyncHandler( async (req, res, next) => {
 
 // desc Update a task
 // route PUT /api/tasks/:id
-export const updateTask = asyncHandler( async (req, res, next) => {
+export const updateTask = asyncHandler( async (req, res) => {
     const id = req.params.id;
-    const taskId = tasks.find((task) => task.id === id);
+    const newTask = Task.findByIdAndUpdate(id, req.body)
 
-    if(!taskId){
-        const error = new Error(`Task of id: ${id} not found.`);
-        error.status = 404;
-        return next(error);
+    if(!newTask){
+        res.status(404);
+        throw new Error(`Task of id: ${id} not found.`);
     }
 
-    taskId.task = req.body.task;
-
-    if(!taskId.task){
-        const error = new Error(`Please enter task`);
-        error.status = 400;
-        return next(error);
-    } res.status(200).json(tasks);
+    if(!req.body.task){
+        res.status(400);
+        throw new Error(`Please enter task`);
+    } res.status(200).json(newTask);
 })
 
 // desc Delete a task
